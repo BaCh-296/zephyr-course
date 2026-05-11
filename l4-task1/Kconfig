@@ -1,0 +1,14 @@
+menu "Heartbeat LED App"
+
+    config APP_HEARTBEAT_PERIOD_MS
+        int "Heartbeat period in miliseconds"
+        range 100 2000
+        default 500
+
+endmenu
+
+menu "Configuración de Zephyr"
+
+source "Kconfig.zephyr"
+
+endmenu

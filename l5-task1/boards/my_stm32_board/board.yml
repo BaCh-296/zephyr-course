@@ -1,0 +1,6 @@
+board:
+  name: my_stm32_board
+  full_name: My stm32 board
+  vendor: st
+  socs:
+    - name: stm32f446xx

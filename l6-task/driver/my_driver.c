@@ -1,9 +1,7 @@
 #define DT_DRV_COMPAT my_driver_sensor
 
 #include <zephyr/kernel.h>
-#include <zephyr/device.h>
 #include <zephyr/devicetree.h>
-#include <zephyr/drivers/gpio.h>
 
 #include "my_driver.h"
 
@@ -65,9 +63,28 @@ static int my_driver_channel_get(
     return 0;
 }
 
-static const struct sensor_driver_api my_driver_api = {
-    .sample_fetch = my_driver_sample_fetch,
-    .channel_get = my_driver_channel_get
+static int my_driver_toggle_impl(
+    const struct device *dev)
+{
+    const struct my_driver_config *cfg = dev->config;
+    struct my_driver_data *data = dev->data;
+
+    data->led_state = !data->led_state;
+
+    gpio_pin_set_dt(
+        &cfg->drive_pin,
+        data->led_state);
+
+    return 0;
+}
+
+static const struct my_driver_api my_driver_api = {
+    .sensor_api = {
+        .sample_fetch = my_driver_sample_fetch,
+        .channel_get = my_driver_channel_get,
+    },
+
+    .toggle = my_driver_toggle_impl,
 };
 
 #define MY_DRIVER_DEFINE(inst)                                                          \

@@ -1,0 +1,13 @@
+menuconfig MY_DRIVER
+    bool "Enable my driver"
+    select GPIO
+    depends on DT_HAS_MY_DRIVER_SENSOR_ENABLED
+    help
+        My sensor driver.
+
+if MY_DRIVER
+    config MY_DRIVER_INIT_STATE
+    bool "Start as high"
+    default n
+
+endif # MY_DRIVER

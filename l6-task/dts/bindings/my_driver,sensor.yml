@@ -1,0 +1,9 @@
+description: My Driver
+compatible: "my_driver,sensor"
+include: base.yaml
+
+properties:
+  drive-gpios:
+    type: phandle-array
+    required: true
+    description: GPIO used to drive the sensor
